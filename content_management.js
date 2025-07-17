@@ -13,9 +13,9 @@ function createContentElement(item) {
   if (item.type === 'video') {
     const video = document.createElement('video');
     video.src = item.url;
-    video.autoplay = true;
+    video.autoplay = false;
     video.controls = false;
-    video.loop = false;
+    video.loop = true;
     video.muted = true;
     video.style.objectFit = "cover";
     video.style.width = "100%";
@@ -48,6 +48,13 @@ function scheduleNextContent() {
   const element = createContentElement(nextItem);
   backBuffer.innerHTML = "";
   backBuffer.appendChild(element);
+
+  if(element.tagName === 'VIDEO'){
+    setTimeout(() => {
+      element.play();
+    },currentItem.duration * 1000);
+  }
+
 
   setTimeout(() => {
     swapBuffers();
