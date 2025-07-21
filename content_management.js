@@ -3,7 +3,7 @@ import { ContentItem } from './content_item.js';
 const ContentPlaylist = [
   new ContentItem('video', 'https://videos.pexels.com/video-files/32501862/13859118_1920_1080_30fps.mp4', 5),
   new ContentItem('image', 'https://images.pexels.com/photos/9688475/pexels-photo-9688475.jpeg', 10),
-  new ContentItem('video', 'https://videos.pexels.com/video-files/33025238/14076811_2560_1440_30fps.mp4', 10),
+  new ContentItem('video', 'https://videos.pexels.com/video-files/33024867/14076483_1920_1080_25fps.mp4', 10),
 ];
 
 
