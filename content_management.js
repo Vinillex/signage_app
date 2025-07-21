@@ -4,7 +4,12 @@ const ContentPlaylist = [
   new ContentItem('video', 'https://videos.pexels.com/video-files/32501862/13859118_1920_1080_30fps.mp4', 5),
   new ContentItem('image', 'https://images.pexels.com/photos/9688475/pexels-photo-9688475.jpeg', 10),
   new ContentItem('video', 'https://videos.pexels.com/video-files/33024867/14076483_1920_1080_25fps.mp4', 10),
+  new ContentItem('video', 'https://videos.pexels.com/video-files/32534746/13874244_1920_1080_30fps.mp4', 15),
+  new ContentItem('image', 'https://images.pexels.com/photos/28516216/pexels-photo-28516216.jpeg', 5),
+  new ContentItem('video', 'https://videos.pexels.com/video-files/30014570/12877677_1920_1080_30fps.mp4', 20),
 ];
+
+
 
 
 
