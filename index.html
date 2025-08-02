@@ -1,11 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Signage App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Digital Signage</title>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Digital Signage">
+  
+  <!-- Manifest for PWA -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <div id="signageContainer" style="width: 100vw; height: 100vh;"></div>
-  <script type="module" src="content_management.js"></script>
+  <!-- Main signage container -->
+  <div id="signageContainer" class="signage-container">
+    <!-- Loading indicator -->
+    <div id="loadingIndicator" class="loading-indicator">
+      <div class="loading-spinner"></div>
+      <p>Initializing Digital Signage...</p>
+    </div>
+  </div>
+
+  <!-- Debug panel (hidden in production) -->
+  <div id="debugPanel" class="debug-panel" style="display: none;">
+    <h3>Debug Information</h3>
+    <div id="debugInfo"></div>
+    <button onclick="toggleDebug()">Toggle Debug</button>
+    <button onclick="restartApp()">Restart App</button>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="src/client/js/app.js"></script>
+  
+  <!-- Debug script -->
+  <script>
+    // Debug functionality
+    function toggleDebug() {
+      const panel = document.getElementById('debugPanel');
+      const isVisible = panel.style.display !== 'none';
+      panel.style.display = isVisible ? 'none' : 'block';
+      
+      if (!isVisible) {
+        updateDebugInfo();
+      }
+    }
+    
+    function updateDebugInfo() {
+      const debugInfo = document.getElementById('debugInfo');
+      if (window.digitalSignageApp) {
+        const status = window.digitalSignageApp.getStatus();
+        debugInfo.innerHTML = `
+          <p><strong>App State:</strong> ${status.appState}</p>
+          <p><strong>Initialized:</strong> ${status.isInitialized}</p>
+          <p><strong>Device Profile:</strong> ${JSON.stringify(status.deviceProfile, null, 2)}</p>
+          <p><strong>Content Manager:</strong> ${JSON.stringify(status.contentManager, null, 2)}</p>
+          <p><strong>QR Registration:</strong> ${JSON.stringify(status.qrRegistration, null, 2)}</p>
+        `;
+      } else {
+        debugInfo.innerHTML = '<p>App not initialized</p>';
+      }
+    }
+    
+    function restartApp() {
+      if (window.digitalSignageApp) {
+        window.digitalSignageApp.restart();
+      }
+    }
+    
+    // Show debug panel in development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      document.getElementById('debugPanel').style.display = 'block';
+    }
+    
+    // Update debug info every 5 seconds
+    setInterval(() => {
+      if (document.getElementById('debugPanel').style.display !== 'none') {
+        updateDebugInfo();
+      }
+    }, 5000);
+  </script>
 </body>
 </html>
